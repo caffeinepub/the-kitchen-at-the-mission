@@ -17,6 +17,8 @@ import {
   Accessibility,
   Baby,
   Car,
+  ChevronLeft,
+  ChevronRight,
   ChevronUp,
   Clock,
   CreditCard,
@@ -37,6 +39,7 @@ import {
   Wine,
   X,
 } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -107,6 +110,7 @@ function Header() {
           >
             <NavLink href="#about">About</NavLink>
             <NavLink href="#menu">Menu</NavLink>
+            <NavLink href="#gallery">Gallery</NavLink>
             <NavLink href="#hours">Hours</NavLink>
             <NavLink href="#contact">Contact</NavLink>
           </nav>
@@ -151,6 +155,9 @@ function Header() {
           </NavLink>
           <NavLink href="#menu" onClick={closeMenu}>
             Menu
+          </NavLink>
+          <NavLink href="#gallery" onClick={closeMenu}>
+            Gallery
           </NavLink>
           <NavLink href="#hours" onClick={closeMenu}>
             Hours
@@ -750,6 +757,213 @@ function AmenitiesSection() {
   );
 }
 
+// ─── Gallery ────────────────────────────────────────────────────────────────
+
+const GALLERY_IMAGES = [
+  "/assets/uploads/screenshot_20260323_112749-019d1de3-d8f0-75de-9dc5-cd3cbe9ba73e-1.jpg",
+  "/assets/uploads/screenshot_20260323_112713-019d1de3-df61-7589-b7ad-36c0874fa897-2.jpg",
+  "/assets/uploads/screenshot_20260323_112703-019d1de3-e26e-7112-ba92-0d86cdf7e183-3.jpg",
+  "/assets/uploads/screenshot_20260323_112733-019d1de3-e432-727b-8699-22d04eb7da2d-4.jpg",
+  "/assets/uploads/screenshot_20260323_112802-019d1de3-ebf4-72cc-864d-b342ae32b6f3-5.jpg",
+  "/assets/uploads/screenshot_20260323_112741-019d1de3-ee1e-77ab-9f06-d00916df9149-6.jpg",
+  "/assets/uploads/screenshot_20260323_112822-019d1de3-eeca-70e8-8293-8b177d58dd35-7.jpg",
+  "/assets/uploads/screenshot_20260323_112809-019d1de3-efbf-743e-a6b2-6a4651b1c835-8.jpg",
+  "/assets/uploads/screenshot_20260323_112816-019d1de3-efcd-750d-a616-5227ce63ece2-9.jpg",
+  "/assets/uploads/screenshot_20260323_112718-019d1de3-f13e-72c7-b279-e3b7eeb52a9a-10.jpg",
+  "/assets/uploads/screenshot_20260323_112847-019d1de3-f249-722c-9cfa-a9368a98e74f-11.jpg",
+  "/assets/uploads/screenshot_20260323_112757-019d1de3-f240-734b-b547-948c0f57ce91-12.jpg",
+  "/assets/uploads/screenshot_20260323_112828-019d1de3-f2ca-726f-a571-b730b8d8df1c-13.jpg",
+  "/assets/uploads/screenshot_20260323_112842-019d1de3-f379-70eb-aa0a-c55c1a46f78a-14.jpg",
+];
+
+function GallerySection() {
+  const ref = useFadeIn<HTMLElement>();
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+  const openLightbox = (index: number) => setLightboxIndex(index);
+  const closeLightbox = () => setLightboxIndex(null);
+
+  const goPrev = () => {
+    if (lightboxIndex === null) return;
+    setLightboxIndex(
+      (lightboxIndex - 1 + GALLERY_IMAGES.length) % GALLERY_IMAGES.length,
+    );
+  };
+
+  const goNext = () => {
+    if (lightboxIndex === null) return;
+    setLightboxIndex((lightboxIndex + 1) % GALLERY_IMAGES.length);
+  };
+
+  // Keyboard navigation
+  useEffect(() => {
+    if (lightboxIndex === null) return;
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setLightboxIndex(null);
+      if (e.key === "ArrowLeft")
+        setLightboxIndex((prev) =>
+          prev === null
+            ? null
+            : (prev - 1 + GALLERY_IMAGES.length) % GALLERY_IMAGES.length,
+        );
+      if (e.key === "ArrowRight")
+        setLightboxIndex((prev) =>
+          prev === null ? null : (prev + 1) % GALLERY_IMAGES.length,
+        );
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [lightboxIndex]);
+
+  return (
+    <>
+      <section
+        id="gallery"
+        ref={ref}
+        className="fade-in-up py-24 md:py-32"
+        style={{ backgroundColor: "#F6F1E6" }}
+      >
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Header */}
+          <div className="text-center mb-14">
+            <p className="eyebrow text-maroon mb-5 justify-center">Photos</p>
+            <h2
+              className="font-serif text-4xl md:text-5xl text-charcoal font-bold"
+              style={{ letterSpacing: "-0.025em" }}
+            >
+              Our Gallery
+            </h2>
+            <div className="flex items-center justify-center gap-3 mt-5">
+              <div className="h-px w-12 bg-gradient-to-r from-transparent to-maroon/40" />
+              <div className="w-1 h-1 rounded-full bg-maroon/50" />
+              <div className="h-px w-12 bg-gradient-to-l from-transparent to-maroon/40" />
+            </div>
+            <p className="font-sans text-charcoal-light mt-5 max-w-lg mx-auto leading-relaxed">
+              A glimpse into our food, atmosphere, and the warm spaces where
+              memories are made.
+            </p>
+          </div>
+
+          {/* Masonry grid */}
+          <div
+            data-ocid="gallery.panel"
+            className="columns-2 sm:columns-3 lg:columns-4 gap-3 space-y-3"
+          >
+            {GALLERY_IMAGES.map((src, i) => (
+              <button
+                key={src}
+                type="button"
+                data-ocid={`gallery.item.${i + 1}`}
+                onClick={() => openLightbox(i)}
+                className="block w-full break-inside-avoid rounded-xl overflow-hidden cursor-zoom-in group focus:outline-none focus-visible:ring-2 focus-visible:ring-maroon"
+                aria-label={`Open view ${i + 1}`}
+              >
+                <img
+                  src={src}
+                  alt={`The Kitchen at The Mission - view ${i + 1}`}
+                  className="w-full object-cover rounded-xl group-hover:scale-[1.02] transition-transform duration-500 group-hover:brightness-90"
+                  loading="lazy"
+                />
+              </button>
+            ))}
+          </div>
+
+          {/* CTA */}
+          <div className="text-center mt-12">
+            <a href="#contact">
+              <Button
+                data-ocid="gallery.primary_button"
+                className="bg-maroon hover:bg-maroon-dark text-cream font-sans font-semibold rounded-full px-8"
+              >
+                Reserve Your Experience
+              </Button>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Lightbox */}
+      <AnimatePresence>
+        {lightboxIndex !== null && (
+          <motion.div
+            key="lightbox"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            data-ocid="gallery.modal"
+            className="fixed inset-0 z-[100] flex items-center justify-center"
+            style={{ backgroundColor: "rgba(15,8,4,0.93)" }}
+            onClick={closeLightbox}
+          >
+            {/* Close */}
+            <button
+              type="button"
+              data-ocid="gallery.close_button"
+              onClick={closeLightbox}
+              aria-label="Close gallery"
+              className="absolute top-5 right-5 z-10 w-10 h-10 rounded-full bg-white/15 hover:bg-white/30 flex items-center justify-center text-white transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            {/* Prev */}
+            <button
+              type="button"
+              data-ocid="gallery.pagination_prev"
+              onClick={(e) => {
+                e.stopPropagation();
+                goPrev();
+              }}
+              aria-label="Previous photo"
+              className="absolute left-4 z-10 w-11 h-11 rounded-full bg-white/15 hover:bg-white/30 flex items-center justify-center text-white transition-colors"
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </button>
+
+            {/* Next */}
+            <button
+              type="button"
+              data-ocid="gallery.pagination_next"
+              onClick={(e) => {
+                e.stopPropagation();
+                goNext();
+              }}
+              aria-label="Next photo"
+              className="absolute right-4 z-10 w-11 h-11 rounded-full bg-white/15 hover:bg-white/30 flex items-center justify-center text-white transition-colors"
+            >
+              <ChevronRight className="w-6 h-6" />
+            </button>
+
+            {/* Image */}
+            <motion.div
+              key={lightboxIndex}
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="relative max-w-5xl max-h-[85vh] mx-12 flex items-center justify-center"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img
+                src={GALLERY_IMAGES[lightboxIndex]}
+                alt={`The Kitchen at The Mission - view ${lightboxIndex + 1}`}
+                className="max-w-full max-h-[85vh] object-contain rounded-xl shadow-2xl"
+              />
+              {/* Counter */}
+              <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 font-sans text-sm text-white/50">
+                {lightboxIndex + 1} / {GALLERY_IMAGES.length}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+}
+
+// ─── Reservation ─────────────────────────────────────────────────────────────
+
 function ReservationSection() {
   const ref = useFadeIn<HTMLElement>();
   const { mutate: submitReservation, isPending } = useSubmitReservation();
@@ -1193,6 +1407,7 @@ function Footer() {
               {[
                 { href: "#about", label: "About" },
                 { href: "#menu", label: "Menu" },
+                { href: "#gallery", label: "Gallery" },
                 { href: "#hours", label: "Hours & Location" },
                 { href: "#amenities", label: "Amenities" },
                 { href: "#contact", label: "Reservations" },
@@ -1300,6 +1515,7 @@ function AppContent() {
         <MenuSection />
         <HoursSection />
         <AmenitiesSection />
+        <GallerySection />
         <ReservationSection />
       </main>
       <Footer />

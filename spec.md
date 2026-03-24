@@ -1,30 +1,27 @@
 # The Kitchen at The Mission
 
 ## Current State
-New project. Empty workspace with scaffolded backend and frontend.
+Full restaurant website with Hero, About, Menu Highlights, Hours & Location, Amenities, Reservation, and Footer sections.
 
 ## Requested Changes (Diff)
 
 ### Add
-- Full restaurant business website for The Kitchen at The Mission
-- Hero section with headline, subtext, and reservation CTA buttons
-- About section describing history, cuisine style, and ambiance
-- Menu Highlights section showcasing signature dishes (Tomahawk Ribeye, Cioppino, Pizza) and meal categories (Breakfast, Lunch, Dinner, Drinks)
-- Hours & Location section with operating hours, address, and map link
-- Amenities section listing features (parking, Wi-Fi, accessibility, pet-friendly patio, etc.)
-- Contact section with phone, email, and reservation CTA
-- Sticky navigation with smooth scroll links
-- Mobile-responsive layout throughout
-- Subtle scroll animations
+- A "Gallery" section between AmenitiesSection and ReservationSection
+- Use all 14 uploaded user photos as gallery images (menus and ambience shots)
+- Section title: "Gallery" with eyebrow label "Photos"
+- Masonry-style or grid layout with lightbox/modal on click
+- Add "Gallery" link to desktop and mobile nav
 
 ### Modify
-- Backend: minimal actor, static site with no dynamic data needed
+- Nav links to include "Gallery" anchor
+- Footer quick links to include "Gallery"
 
 ### Remove
-- Nothing to remove
+- Nothing
 
 ## Implementation Plan
-1. Generate minimal Motoko backend (greeting/placeholder)
-2. Build full single-page React frontend with all sections
-3. Apply warm mission-style design system (earthy tones, deep reds, creams, golds)
-4. Ensure mobile responsiveness and smooth scroll behavior
+1. Add GallerySection component with 14 uploaded images in a responsive grid
+2. Add lightbox modal for full-size image view on click
+3. Insert GallerySection into AppContent between AmenitiesSection and ReservationSection
+4. Add Gallery nav link in Header (desktop and mobile)
+5. Add Gallery link in Footer quick links
