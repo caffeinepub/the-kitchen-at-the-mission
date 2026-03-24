@@ -198,9 +198,8 @@ function HeroSection() {
         }}
       />
 
-      {/* Cinematic gradient: dark top → clear middle → heavy dark bottom */}
+      {/* Cinematic gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/30 to-black/85" />
-      {/* Radial vignette for depth */}
       <div
         className="absolute inset-0"
         style={{
@@ -208,7 +207,6 @@ function HeroSection() {
             "radial-gradient(ellipse 80% 70% at 50% 50%, transparent 20%, rgba(0,0,0,0.45) 100%)",
         }}
       />
-      {/* Warm amber tint at bottom for mood */}
       <div
         className="absolute bottom-0 left-0 right-0 h-1/3"
         style={{
@@ -223,7 +221,6 @@ function HeroSection() {
           Hotel Mission De Oro · Santa Nella, CA
         </p>
 
-        {/* Decorative gold rule */}
         <div className="flex items-center justify-center gap-4 mb-7">
           <div className="h-px w-16 bg-gradient-to-r from-transparent to-gold/60" />
           <div className="w-1.5 h-1.5 rounded-full bg-gold/70" />
@@ -249,7 +246,6 @@ function HeroSection() {
           warmth and care inside Hotel Mission De Oro.
         </p>
 
-        {/* CTAs */}
         <div className="hero-cta flex flex-col sm:flex-row gap-4 justify-center mb-12">
           <a href="#contact">
             <Button
@@ -272,7 +268,6 @@ function HeroSection() {
           </a>
         </div>
 
-        {/* Stars */}
         <div className="hero-stars flex items-center justify-center gap-2">
           <div className="flex gap-0.5">
             {[1, 2, 3, 4, 5].map((i) => (
@@ -285,7 +280,6 @@ function HeroSection() {
         </div>
       </div>
 
-      {/* Scroll indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
         <div className="w-6 h-10 border-2 border-white/30 rounded-full flex items-start justify-center p-1.5">
           <div className="w-1.5 h-2.5 bg-white/50 rounded-full" />
@@ -334,7 +328,6 @@ function AboutSection() {
               something new to discover.
             </p>
 
-            {/* Badges */}
             <div className="flex flex-wrap gap-2 mb-9">
               {[
                 "Opened 2017",
@@ -366,16 +359,23 @@ function AboutSection() {
             <img
               src="/assets/generated/patio-outdoor.dim_1200x700.jpg"
               alt="Outdoor patio at The Kitchen at The Mission"
-              className="rounded-2xl w-full object-cover shadow-card h-80 md:h-96 lg:h-[500px]"
+              className="rounded-2xl w-full object-cover shadow-card h-80 md:h-[26rem]"
               loading="lazy"
             />
-            <div className="absolute -bottom-4 -left-4 bg-maroon text-cream rounded-xl px-5 py-3 shadow-lg">
-              <p className="font-sans text-xs font-medium opacity-70">Est.</p>
+            <div
+              className="absolute -bottom-4 -left-4 bg-maroon text-cream rounded-xl px-5 py-3 shadow-lg"
+              style={{
+                background: "linear-gradient(135deg, #6B1F1F 0%, #511717 100%)",
+              }}
+            >
               <p
-                className="font-serif font-bold text-2xl leading-none"
-                style={{ letterSpacing: "-0.03em" }}
+                className="font-serif font-bold text-lg"
+                style={{ letterSpacing: "-0.02em" }}
               >
-                2017
+                Est. 2017
+              </p>
+              <p className="font-sans text-xs opacity-75 tracking-wide">
+                Hotel Mission De Oro
               </p>
             </div>
           </div>
@@ -385,29 +385,209 @@ function AboutSection() {
   );
 }
 
+// ─── Menu ────────────────────────────────────────────────────────────────────
+
 const DISHES = [
   {
     img: "/assets/generated/dish-tomahawk.dim_600x450.jpg",
-    name: "46 oz Tomahawk Ribeye Steak",
-    desc: "Our crown jewel. A prime bone-in ribeye aged to perfection, seasoned with house-blend herbs and served sizzling with roasted vegetables and compound butter.",
+    name: "THE TOMAHAWK",
+    desc: "46 oz. bone-in ribeye grilled over open flame, served family-style with balsamic fig reduction, jalapeño demi-glaze, creamy mashed potatoes, and seasonal vegetables.",
     tag: "Signature",
+    price: "$148",
   },
   {
     img: "/assets/generated/dish-cioppino.dim_600x450.jpg",
-    name: "Italian Cioppino",
-    desc: "A classic San Francisco–inspired seafood stew brimming with clams, mussels, shrimp, crab, and fresh fish in a rich, herb-scented tomato broth.",
+    name: "Cioppino",
+    desc: "Classic seafood stew with fresh lobster, scallops, shrimp, mussels, clams in a rich herb-scented tomato broth.",
     tag: "Chef's Pick",
+    price: "$58",
   },
   {
     img: "/assets/generated/dish-pizza.dim_600x450.jpg",
-    name: "Hand-Tossed Gourmet Pizzas",
-    desc: "Artisan pizzas crafted with hand-tossed dough, house-made sauces, and premium toppings. A crowd favorite for every age.",
+    name: "Neapolitan Pizza",
+    desc: "Hand-tossed artisan pizzas — Margherita, Buffalo Ranch Chicken, BBQ Chicken, Jalapeño Popper. A crowd favorite for every age.",
     tag: "Family Favorite",
+    price: "from $18",
   },
 ];
 
+const MENU_DATA: Record<
+  string,
+  { category: string; items: { name: string; price: string }[] }[]
+> = {
+  Breakfast: [
+    {
+      category: "Egg Dishes",
+      items: [
+        { name: "The Hotel California", price: "$14" },
+        { name: "Chilaquiles", price: "$14" },
+        { name: "NY Steak & Eggs", price: "$21" },
+        { name: "Breakfast Burrito", price: "$12" },
+        { name: "California Country Eggs Benedict", price: "$14" },
+        { name: "Country Fried Steak & Eggs", price: "$21" },
+        { name: "Steak & Wild Mushroom Omelet", price: "$16" },
+        { name: "Traditional Mission de Oro Omelet", price: "$14" },
+      ],
+    },
+    {
+      category: "From the Griddle",
+      items: [
+        { name: "French Toast", price: "$14" },
+        { name: "Buttermilk Pancakes", price: "$12" },
+        { name: "Biscuits and Gravy", price: "from $8" },
+      ],
+    },
+    {
+      category: "Light Bites",
+      items: [
+        { name: "Old Fashioned Oatmeal Bowl", price: "$10" },
+        { name: "Yogurt Parfait", price: "$6" },
+        { name: "Cereal Bowl", price: "$6" },
+      ],
+    },
+  ],
+  Lunch: [
+    {
+      category: "Starters",
+      items: [
+        { name: "California Steak Bites", price: "$21" },
+        { name: "Tomato Bruschetta", price: "$15" },
+        { name: "Chef's Jumbo Wings", price: "$15" },
+        { name: "Garlic Lemon Pepper Calamari", price: "$18" },
+        { name: "Fried Asparagus", price: "$16" },
+        { name: "Ahi Poke Nachos", price: "$22" },
+      ],
+    },
+    {
+      category: "Salads",
+      items: [
+        { name: "Caesar Salad", price: "$12" },
+        { name: "Gorgonzola Spinach Salad", price: "$14" },
+        { name: "Grilled Romaine Heart Salad", price: "$14" },
+        { name: "Signature Soup & Salad", price: "$17" },
+      ],
+    },
+    {
+      category: "Pizzas",
+      items: [
+        { name: "Margherita", price: "$16" },
+        { name: "Pepperoni", price: "$15" },
+        { name: "Buffalo Ranch Chicken", price: "$17" },
+        { name: "BBQ Chicken", price: "$17" },
+        { name: "Jalapeño Popper", price: "$17" },
+        { name: "California Veggie", price: "$16" },
+      ],
+    },
+    {
+      category: "Specialties",
+      items: [
+        { name: "Open Face California Steak Sandwich", price: "$24" },
+        { name: "Santa Maria Sous Vide Tri-Tip Sandwich", price: "$24" },
+        { name: "Prime Rib French Dip", price: "$22" },
+        { name: "Cedar Plank Salmon", price: "$21" },
+        { name: "Fish & Chips", price: "$18" },
+        { name: "Crispy Fish Tacos", price: "$16" },
+      ],
+    },
+  ],
+  Dinner: [
+    {
+      category: "Starters",
+      items: [
+        { name: "California Steak Bites", price: "$24" },
+        { name: "Caprese Burrata", price: "$18" },
+        { name: "Garlic Lemon Pepper Calamari", price: "$18" },
+        { name: "Ahi Poke Nachos", price: "$22" },
+        { name: "Crab Cakes Piccata", price: "$24" },
+        { name: "Fried Brussel Sprouts", price: "$16" },
+        { name: "French Onion Soup", price: "$12" },
+      ],
+    },
+    {
+      category: "Seafood",
+      items: [
+        { name: "Cold Water Lobster Tail", price: "$78" },
+        { name: "Cioppino", price: "$58" },
+        { name: "Fresh Alaskan Halibut", price: "$48" },
+        { name: "Pan-Seared Atlantic Salmon", price: "$32" },
+        { name: "Connecticut Style Lobster Roll", price: "$38" },
+        { name: "Seafood Pasta Marina", price: "$52" },
+      ],
+    },
+    {
+      category: "Signature Entrées",
+      items: [
+        { name: "THE TOMAHAWK (46 oz)", price: "$148" },
+        { name: "Surf & Turf", price: "$104" },
+        { name: "Bacon-Wrapped Filet", price: "$52" },
+        { name: "Ribeye Steak", price: "$52" },
+        { name: "New York Steak", price: "$42" },
+        { name: "Guinness Braised Short Ribs", price: "$42" },
+        { name: "Prime Rib Au Jus (Fri & Sat)", price: "$48" },
+        { name: "Chicken Marsala", price: "$30" },
+        { name: "Chicken Piccata", price: "$30" },
+        { name: "Frenched Pork Chop", price: "$42" },
+      ],
+    },
+    {
+      category: "Pasta",
+      items: [
+        { name: "California Penne Pasta", price: "$20" },
+        { name: "Spicy Ketel One Vodka Pasta", price: "$20" },
+        { name: "Brick Oven Pasta Rustica", price: "$24" },
+      ],
+    },
+  ],
+  Drinks: [
+    {
+      category: "Cocktails",
+      items: [
+        { name: "Woodford Rye Old Fashioned", price: "$12" },
+        { name: "Spicy Black Manhattan", price: "$12" },
+        { name: "The Negroni", price: "$12" },
+        { name: "Jalapeño Pineapple Margarita", price: "$10" },
+        { name: "Lavender Lemon Drop", price: "$10" },
+        { name: "Cadillac Blood Orange Margarita", price: "$12" },
+        { name: "The French 75", price: "$12" },
+        { name: "Moscow Mule", price: "$10" },
+        { name: "Mission Mimosa", price: "$18" },
+        { name: "Chef's Bloody Mary", price: "$20" },
+      ],
+    },
+    {
+      category: "Wine by the Glass",
+      items: [
+        { name: "House Cabernet", price: "$8" },
+        { name: "Rodney Strong Cabernet", price: "$16" },
+        { name: "J. Vineyards Pinot Noir", price: "$12" },
+        { name: "House Chardonnay", price: "$8" },
+        { name: "Frank Family Chardonnay", price: "$12" },
+        { name: "Duck Horn Chardonnay", price: "$16" },
+        { name: "La Marca Prosecco", price: "$10" },
+        { name: "Gloria Ferrer Champagne", price: "$14" },
+      ],
+    },
+    {
+      category: "Beer",
+      items: [
+        { name: "Beer Flight (4 draft)", price: "$10" },
+        { name: "Lagunitas IPA (16oz)", price: "$6" },
+        { name: "Firestone 805 Blonde Ale", price: "$6" },
+        { name: "Blue Moon (16oz)", price: "$6" },
+        { name: "Modelo Especial", price: "$5.50" },
+        { name: "Corona", price: "$5.50" },
+        { name: "Heineken", price: "$5.50" },
+      ],
+    },
+  ],
+};
+
+const MENU_TABS = ["Breakfast", "Lunch", "Dinner", "Drinks"] as const;
+type MenuTab = (typeof MENU_TABS)[number];
+
 function MenuSection() {
   const ref = useFadeIn<HTMLElement>();
+  const [activeTab, setActiveTab] = useState<MenuTab>("Dinner");
 
   return (
     <section
@@ -417,6 +597,7 @@ function MenuSection() {
       style={{ backgroundColor: "#1E120A" }}
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section header */}
         <div className="text-center mb-16">
           <p className="eyebrow text-gold mb-5 justify-center">
             Menu Highlights
@@ -427,7 +608,6 @@ function MenuSection() {
           >
             Our Signature Dishes
           </h2>
-          {/* Decorative rule */}
           <div className="flex items-center justify-center gap-3 mt-5">
             <div className="h-px w-12 bg-gradient-to-r from-transparent to-gold/50" />
             <div className="w-1 h-1 rounded-full bg-gold/60" />
@@ -435,8 +615,8 @@ function MenuSection() {
           </div>
         </div>
 
-        {/* Cards */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-14 stagger">
+        {/* Signature Dish Cards */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-24 stagger">
           {DISHES.map((dish, i) => (
             <div
               key={dish.name}
@@ -454,19 +634,26 @@ function MenuSection() {
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   loading="lazy"
                 />
-                {/* Gradient over image for card readability */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 <span className="absolute top-3 left-3 bg-gold text-charcoal text-xs font-sans font-bold px-2.5 py-1 rounded-full tracking-wide">
                   {dish.tag}
                 </span>
               </div>
               <div className="p-6">
-                <h3
-                  className="font-serif font-bold text-lg text-cream mb-2.5"
-                  style={{ letterSpacing: "-0.015em" }}
-                >
-                  {dish.name}
-                </h3>
+                <div className="flex items-start justify-between gap-3 mb-2.5">
+                  <h3
+                    className="font-serif font-bold text-lg text-cream"
+                    style={{ letterSpacing: "-0.015em" }}
+                  >
+                    {dish.name}
+                  </h3>
+                  <span
+                    className="font-serif font-bold text-xl shrink-0"
+                    style={{ color: "#C9A56A" }}
+                  >
+                    {dish.price}
+                  </span>
+                </div>
                 <p
                   className="font-sans text-sm leading-[1.8]"
                   style={{ color: "rgba(246,241,230,0.65)" }}
@@ -478,28 +665,125 @@ function MenuSection() {
           ))}
         </div>
 
-        {/* Meal badges */}
-        <div className="flex flex-wrap justify-center gap-2 mb-6">
-          {["Breakfast", "Brunch", "Lunch", "Dinner", "Drinks"].map((m) => (
-            <span
-              key={m}
-              className="font-sans text-sm font-semibold px-4 py-1.5 rounded-full text-charcoal"
-              style={{ background: "#C9A56A" }}
+        {/* Full Menu Tabs */}
+        <div>
+          <div className="text-center mb-10">
+            <p className="eyebrow text-gold mb-4 justify-center">Full Menu</p>
+            <h3
+              className="font-serif text-3xl md:text-4xl font-bold text-cream"
+              style={{ letterSpacing: "-0.02em" }}
             >
-              {m}
-            </span>
-          ))}
+              Explore Every Course
+            </h3>
+            <div className="flex items-center justify-center gap-3 mt-4">
+              <div className="h-px w-10 bg-gradient-to-r from-transparent to-gold/40" />
+              <div className="w-1 h-1 rounded-full bg-gold/50" />
+              <div className="h-px w-10 bg-gradient-to-l from-transparent to-gold/40" />
+            </div>
+          </div>
+
+          {/* Tab Buttons */}
+          <div
+            className="flex justify-center gap-2 mb-10 flex-wrap"
+            data-ocid="menu.tab"
+          >
+            {MENU_TABS.map((tab) => (
+              <button
+                key={tab}
+                type="button"
+                onClick={() => setActiveTab(tab)}
+                className="font-sans font-semibold text-sm px-6 py-2 rounded-full transition-all duration-200"
+                style={
+                  activeTab === tab
+                    ? {
+                        background: "transparent",
+                        border: "2px solid #C9A56A",
+                        color: "#C9A56A",
+                      }
+                    : {
+                        background: "rgba(255,255,255,0.05)",
+                        border: "2px solid rgba(201,165,106,0.2)",
+                        color: "rgba(246,241,230,0.5)",
+                      }
+                }
+              >
+                {tab}
+              </button>
+            ))}
+          </div>
+
+          {/* Menu Items Grid */}
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
+            className="rounded-2xl overflow-hidden"
+            style={{
+              background: "rgba(255,255,255,0.03)",
+              border: "1px solid rgba(201,165,106,0.12)",
+            }}
+          >
+            <div className="grid md:grid-cols-2">
+              {MENU_DATA[activeTab].map((section, si) => (
+                <div
+                  key={section.category}
+                  className="p-6 md:p-8"
+                  style={{
+                    borderBottom:
+                      si < MENU_DATA[activeTab].length - 1
+                        ? "1px solid rgba(201,165,106,0.08)"
+                        : "none",
+                    borderRight:
+                      si % 2 === 0
+                        ? "1px solid rgba(201,165,106,0.08)"
+                        : "none",
+                  }}
+                >
+                  <p
+                    className="font-sans text-xs font-bold tracking-[0.18em] uppercase mb-5"
+                    style={{ color: "rgba(201,165,106,0.7)" }}
+                  >
+                    {section.category}
+                  </p>
+                  <ul className="space-y-3">
+                    {section.items.map((item) => (
+                      <li
+                        key={item.name}
+                        className="flex items-baseline justify-between gap-4"
+                      >
+                        <span
+                          className="font-sans text-sm"
+                          style={{ color: "rgba(246,241,230,0.82)" }}
+                        >
+                          {item.name}
+                        </span>
+                        <span
+                          className="font-serif font-semibold text-sm shrink-0"
+                          style={{ color: "#C9A56A" }}
+                        >
+                          {item.price}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Disclaimer */}
+          <p
+            className="text-center font-sans text-xs mt-6 leading-relaxed max-w-xl mx-auto"
+            style={{ color: "rgba(246,241,230,0.38)" }}
+          >
+            Consuming raw or undercooked meats may increase risk of foodborne
+            illness. 18% service charge on parties of 8 or more.
+          </p>
         </div>
 
-        <p
-          className="text-center font-sans text-sm mb-12"
-          style={{ color: "rgba(246,241,230,0.5)" }}
-        >
-          ✓ Vegetarian &nbsp;·&nbsp; ✓ Vegan &nbsp;·&nbsp; ✓ Gluten-Free options
-          available
-        </p>
-
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+        {/* CTAs */}
+        <div className="flex flex-col sm:flex-row gap-4 justify-center mt-14">
           <Button
             data-ocid="menu.secondary_button"
             variant="outline"
@@ -795,7 +1079,6 @@ function GallerySection() {
     setLightboxIndex((lightboxIndex + 1) % GALLERY_IMAGES.length);
   };
 
-  // Keyboard navigation
   useEffect(() => {
     if (lightboxIndex === null) return;
     const handler = (e: KeyboardEvent) => {
@@ -824,7 +1107,6 @@ function GallerySection() {
         style={{ backgroundColor: "#F6F1E6" }}
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Header */}
           <div className="text-center mb-14">
             <p className="eyebrow text-maroon mb-5 justify-center">Photos</p>
             <h2
@@ -844,7 +1126,6 @@ function GallerySection() {
             </p>
           </div>
 
-          {/* Masonry grid */}
           <div
             data-ocid="gallery.panel"
             className="columns-2 sm:columns-3 lg:columns-4 gap-3 space-y-3"
@@ -868,7 +1149,6 @@ function GallerySection() {
             ))}
           </div>
 
-          {/* CTA */}
           <div className="text-center mt-12">
             <a href="#contact">
               <Button
@@ -882,7 +1162,6 @@ function GallerySection() {
         </div>
       </section>
 
-      {/* Lightbox */}
       <AnimatePresence>
         {lightboxIndex !== null && (
           <motion.div
@@ -896,7 +1175,6 @@ function GallerySection() {
             style={{ backgroundColor: "rgba(15,8,4,0.93)" }}
             onClick={closeLightbox}
           >
-            {/* Close */}
             <button
               type="button"
               data-ocid="gallery.close_button"
@@ -907,7 +1185,6 @@ function GallerySection() {
               <X className="w-5 h-5" />
             </button>
 
-            {/* Prev */}
             <button
               type="button"
               data-ocid="gallery.pagination_prev"
@@ -921,7 +1198,6 @@ function GallerySection() {
               <ChevronLeft className="w-6 h-6" />
             </button>
 
-            {/* Next */}
             <button
               type="button"
               data-ocid="gallery.pagination_next"
@@ -935,7 +1211,6 @@ function GallerySection() {
               <ChevronRight className="w-6 h-6" />
             </button>
 
-            {/* Image */}
             <motion.div
               key={lightboxIndex}
               initial={{ scale: 0.95, opacity: 0 }}
@@ -950,7 +1225,6 @@ function GallerySection() {
                 alt={`The Kitchen at The Mission - view ${lightboxIndex + 1}`}
                 className="max-w-full max-h-[85vh] object-contain rounded-xl shadow-2xl"
               />
-              {/* Counter */}
               <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 font-sans text-sm text-white/50">
                 {lightboxIndex + 1} / {GALLERY_IMAGES.length}
               </div>

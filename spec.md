@@ -1,27 +1,23 @@
 # The Kitchen at The Mission
 
 ## Current State
-Full restaurant website with Hero, About, Menu Highlights, Hours & Location, Amenities, Reservation, and Footer sections.
+Menu section has 3 placeholder dish cards with no real pricing.
 
 ## Requested Changes (Diff)
 
 ### Add
-- A "Gallery" section between AmenitiesSection and ReservationSection
-- Use all 14 uploaded user photos as gallery images (menus and ambience shots)
-- Section title: "Gallery" with eyebrow label "Photos"
-- Masonry-style or grid layout with lightbox/modal on click
-- Add "Gallery" link to desktop and mobile nav
+- Real menu items and prices in a tabbed browser (Breakfast, Lunch, Dinner, Drinks)
+- Prices shown on signature dish cards
 
 ### Modify
-- Nav links to include "Gallery" anchor
-- Footer quick links to include "Gallery"
+- DISHES array: real dishes with actual prices from uploaded menus
+- MenuSection: add tabbed menu section with real items/prices
 
 ### Remove
 - Nothing
 
 ## Implementation Plan
-1. Add GallerySection component with 14 uploaded images in a responsive grid
-2. Add lightbox modal for full-size image view on click
-3. Insert GallerySection into AppContent between AmenitiesSection and ReservationSection
-4. Add Gallery nav link in Header (desktop and mobile)
-5. Add Gallery link in Footer quick links
+1. Update DISHES with real data (Tomahawk $148, Cioppino $58, Pizza from $18)
+2. Add MENU_DATA with categorized items per tab
+3. Add tab switcher + scrollable item list with right-aligned gold prices
+4. Maintain dark aesthetic
